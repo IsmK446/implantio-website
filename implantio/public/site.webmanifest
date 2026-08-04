@@ -1,0 +1,13 @@
+{
+  "name": "Implantio",
+  "short_name": "Implantio",
+  "description": "AI receptionist for high-value dental practices",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F4F7FB",
+  "theme_color": "#08172C",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}

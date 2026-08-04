@@ -1,0 +1,157 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Colour, radius and font variables are generated from src/config/themes.ts and
+ * injected by src/components/layout/theme-styles.tsx. Do not hard-code colours
+ * in this file — edit the theme config instead.
+ */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Stops the sticky header covering anchor targets */
+    scroll-padding-top: 6rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-paper text-body font-sans antialiased;
+    font-feature-settings: "cv11", "ss01";
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: rgb(var(--c-accent) / 0.18);
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--c-accent));
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display text-ink;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Remove the number spinner from the ROI inputs */
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+}
+
+@layer components {
+  /* ---- Type scale -------------------------------------------------- */
+  .t-display {
+    @apply font-display font-bold tracking-display leading-[1.02];
+    font-size: clamp(2.5rem, 1.4rem + 4.4vw, 4.5rem);
+  }
+
+  .t-h2 {
+    @apply font-display font-bold tracking-display leading-[1.08];
+    font-size: clamp(1.9rem, 1.2rem + 2.6vw, 3rem);
+  }
+
+  .t-h3 {
+    @apply font-display font-semibold tracking-display leading-[1.18];
+    font-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.6rem);
+  }
+
+  .t-lead {
+    @apply text-lg leading-relaxed sm:text-xl;
+  }
+
+  /* Small uppercase mono labels — the "clinical record" voice of the site */
+  .t-label {
+    @apply font-mono text-[0.68rem] uppercase tracking-label;
+  }
+
+  /* ---- Surfaces ---------------------------------------------------- */
+  .panel {
+    @apply rounded-card border border-line bg-surface;
+  }
+
+  .panel-dark {
+    @apply rounded-card border border-ink-line bg-ink-soft;
+  }
+
+  /* A hairline grid used behind dark bands */
+  .grid-field {
+    background-image:
+      linear-gradient(to right, rgb(var(--c-ink-line) / 0.5) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(var(--c-ink-line) / 0.5) 1px, transparent 1px);
+    background-size: 64px 64px;
+    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 20%, transparent 75%);
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 20%, transparent 75%);
+  }
+
+  /* ---- Scroll reveal ----------------------------------------------- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  .reveal[data-visible="true"] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Hide content visually but keep it available to screen readers */
+  .sr-only-focusable:not(:focus):not(:focus-within) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+}
+
+/* Respect the operating system's reduced-motion preference everywhere */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
